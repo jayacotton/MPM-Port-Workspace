@@ -26,3 +26,8 @@ wait for an EOL event or maybe just schedule to user via round robin schedule.  
 will also benifit from interrupt code if available.  The printer and consoles are polled
 output.  There is a real time clock module that is a must or the schedule will not work.
 
+The bin directory has a complete binary distro of MP/M 2 with the exception of XIOS
+
+The isx directory has source code for ISX.  A tool for changing CP/M 2.2 to an ISIS 
+look alike.
+
