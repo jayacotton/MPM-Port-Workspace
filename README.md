@@ -19,6 +19,8 @@ simcpm with CP/M 2 boot disk.
 
 The main porting task is isolated to one file (2 really)  RESXIOS.ASM  (or BNKXIOS.ASM)
 The porting guide has 2 examples and there is a file RESXIOS.ASM that can be hacked on.
+There is a file called LDRBIOS.ASM  that will have to be modified (maybe) I will update
+when I get there.
 
 MP/M uses interrupt driven input and places input bytes into each consol buffer as they
 arrive.  The scheduler code can then start up the user task and feed it data or it can
