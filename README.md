@@ -1,6 +1,8 @@
 # MPM-Port-Workspace
 Porting DRI MP/M os to S100 Z180 SBC board.
 
+This is all WIP at this time.
+
 NOTE:  All the information in the repo was found on the internet in other 
 repo's.  Names TBD.
 
