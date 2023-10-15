@@ -3,6 +3,9 @@ Porting DRI MP/M os to S100 Z180 SBC board.
 
 This is all WIP at this time.
 
+I have added 2 Z180 manuals to the repo.  These are references for the Z180 
+port.
+
 NOTE:  All the information in the repo was found on the internet in other 
 repo's.  Names TBD.
 
