@@ -38,3 +38,32 @@ The bin directory has a complete binary distro of MP/M 2 with the exception of X
 The isx directory has source code for ISX.  A tool for changing CP/M 2.2 to an ISIS 
 look alike.
 
+Progress:
+
+After reading through the sample RESXIOS.ASM code from the bin directory, which is the
+same as the RESXIOS.ASM in the CONTROL directory, and looks the same as whats in the porting
+guide.  
+
+I have decided to rewrite the SIO code (for 1 serial port), the timer code for the
+z180 timer, and the disk code so it works with SD card on the S100 Z180 SBC board.
+
+Its not totally obvious how the interrupts are handled by the code, it looks like the output
+part is polled and the input is buffered by an interrupt routine.  That will require some tweeking
+also.  
+
+The timer code in the sample driver looks like its running the 88-rtc board.  This well need a
+lot of tinkering.
+
+The disk driver is a total blowout.  I will need to recode all of it.
+
+The good part is, I have RomWBW to guide the way.
+
+As a point of interest, MP/M must be started from a CP/M 2.2 environment.  No big problem there
+but, its not going to interface with RomWBW at all.  This is due to an unfortunate issue with the
+way RomWBW is designed to handle interrupts from the serial ports.  Perhaps after we get a simplified
+version of MP/M running, it will become clear how to move forward with some kind of integration.
+
+The bottom line issue is MP/M  uses the receive interrupts on the serial ports to figure out which user
+is demanding CPU time.  So, no interrupts, no service.  I suppose you could poll the input from the
+timer loop and figure it out that way, but the responce time would surely suck since CPU intensive
+code gets more time by default.
