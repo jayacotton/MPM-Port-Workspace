@@ -67,3 +67,40 @@ The bottom line issue is MP/M  uses the receive interrupts on the serial ports t
 is demanding CPU time.  So, no interrupts, no service.  I suppose you could poll the input from the
 timer loop and figure it out that way, but the responce time would surely suck since CPU intensive
 code gets more time by default.
+
+I am currently working on the mpmldr program.  I have managed to build it from scratch on the Z180 S100 SBC
+board, but can't use the
+mpmldr.sub file since the build droppings fill up the a: drive.  So doing the build one line at a time.
+I found a potentally nasty bit of code in the loader. 
+
+>  declare mon1 literally 'ldmon1';
+>  declare mon2 literally 'ldmon2';
+>
+>  mon1:
+>    procedure (func,info) external;
+>      declare func byte;
+>      declare info address;
+>    end mon1;
+>
+>  
+This in it self is not a problem.  However....
+
+>
+>	public	ldmon1,ldmon2
+>
+>ldmon1	equ	0d06h
+>ldmon2	equ	0d06h
+>
+>offset	equ	0000h
+>
+>fcb	equ	005ch+offset
+>fcb16	equ	006ch+offset
+>tbuff	equ	0080h+offset
+>	public	fcb,fcb16,tbuff
+
+That is a bug looking for a place to happen.
+
+I have not figured out what is at 0x60d yet, bunch of assembly code.
+No idea what its doing, but it will eventually get to my console byte write 
+code.  It does not write on the console ... yet.
+
