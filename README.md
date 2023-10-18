@@ -73,52 +73,64 @@ board, but can't use the
 mpmldr.sub file since the build droppings fill up the a: drive.  So doing the build one line at a time.
 I found a potentally nasty bit of code in the loader. 
 
->  declare mon1 literally 'ldmon1';
->  declare mon2 literally 'ldmon2';
->
->  mon1:
->    procedure (func,info) external;
->      declare func byte;
->      declare info address;
->    end mon1;
->
->  
+```
+  declare mon1 literally 'ldmon1';
+  declare mon2 literally 'ldmon2';
+
+  mon1:
+    procedure (func,info) external;
+      declare func byte;
+      declare info address;
+    end mon1;
+```
+
 This in it self is not a problem.  However....
 
->
->	public	ldmon1,ldmon2
->
->ldmon1	equ	0d06h
->ldmon2	equ	0d06h
->
->offset	equ	0000hcrtst:                  
->
->fcb	equ	005ch+offset
->fcb16	equ	006ch+offset
->tbuff	equ	0080h+offset
->	public	fcb,fcb16,tbuff
+```
+
+	public	ldmon1,ldmon2
+
+ldmon1	equ	0d06h
+ldmon2	equ	0d06h
+
+offset	equ	0000hcrtst:                  
+
+fcb	equ	005ch+offset
+fcb16	equ	006ch+offset
+tbuff	equ	0080h+offset
+	public	fcb,fcb16,tbuff
+```
 
 That is a bug looking for a place to happen.
 
-I have not figured out what is at 0x60d yet, bunch of assembly code.
+I have not figured out what is at 0xd06 yet, bunch of assembly code.
 No idea what its doing, but it will eventually get to my console byte write 
 code.  It does not write on the console ... yet.
+
+This one does not lead to a bug.  The address is a decoder that figures out what
+the function code is and branches to the support code for it.  So this seems to
+be a bit of code that will not move, just must remember that its there.
 
 Another gotcha.  The plm80.lib or mpmldr.plm has code that calls the 
 crtsts code.  
 
->crtst:                  ; crt: status
->        in Z180STAT0 
->        ani 080h  
->        rz
->        ori 0ffh 
->        ret
+```
+crtst:                  ; crt: status
+        in Z180STAT0 
+        ani 080h  
+        rz
+        ori 0ffh 
+        ret
+
+```
 
 The problem is that the caller says 
 
->  0E06  CALL 1706                                                               
->  0E09  ANI  01                                                                 
->  0E0B  RZ
+```
+  0E06  CALL 1706                                                               
+  0E09  ANI  01                                                                 
+  0E0B  RZ
+```
 
 So, I guess the caller does not trust the crtst code to
 do the correct test.  For fun I will punch this code out
