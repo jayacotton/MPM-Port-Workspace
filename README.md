@@ -91,7 +91,7 @@ This in it self is not a problem.  However....
 >ldmon1	equ	0d06h
 >ldmon2	equ	0d06h
 >
->offset	equ	0000h
+>offset	equ	0000hcrtst:                  
 >
 >fcb	equ	005ch+offset
 >fcb16	equ	006ch+offset
@@ -103,4 +103,25 @@ That is a bug looking for a place to happen.
 I have not figured out what is at 0x60d yet, bunch of assembly code.
 No idea what its doing, but it will eventually get to my console byte write 
 code.  It does not write on the console ... yet.
+
+Another gotcha.  The plm80.lib or mpmldr.plm has code that calls the 
+crtsts code.  
+
+>crtst:                  ; crt: status
+>        in Z180STAT0 
+>        ani 080h  
+>        rz
+>        ori 0ffh 
+>        ret
+
+The problem is that the caller says 
+
+>  0E06  CALL 1706                                                               
+>  0E09  ANI  01                                                                 
+>  0E0B  RZ
+
+So, I guess the caller does not trust the crtst code to
+do the correct test.  For fun I will punch this code out
+and see what happens.
+
 
