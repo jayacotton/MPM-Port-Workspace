@@ -2,6 +2,7 @@
 Porting DRI MP/M os to S100 Z180 SBC board.
 
 This is all WIP at this time.
+Below is my journy to getting MPM to load and run.
 
 I have added 2 Z180 manuals to the repo.  These are references for the Z180 
 port.
@@ -135,5 +136,11 @@ The problem is that the caller says
 So, I guess the caller does not trust the crtst code to
 do the correct test.  For fun I will punch this code out
 and see what happens.
+
+After a long 2 weeks, I have finally got console output working.  First, thanks to Wayne for providing the
+hint that I needed.  The bug is that z180 internal registers must be addressed with 16bit i/o operations.
+In addition the B register must be set to zero.  Also, many funcions up stream do not know about this 
+convention, and they use the BC pair at a string pointer for the console messages.  So, take care to 
+preserve the DE and BC registers.
 
 
