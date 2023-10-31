@@ -143,4 +143,13 @@ In addition the B register must be set to zero.  Also, many funcions up stream d
 convention, and they use the BC pair at a string pointer for the console messages.  So, take care to 
 preserve the DE and BC registers.
 
+I have gotten a bit hacked off at the PLM compiler.  Its really sensitive to cr/lf etc.  The compiler
+also generates a lot of error messages that don't seem to be really there.  I can never figure out
+what its up to.  SO, mpmldr is being rewritten in C using the z88dk compiler.  
+
+So far I am almost ready to make the jump into the startpoint.  There is a potential compiler bug
+that I am rather supprised to run into, at the moment I am updating z88dk to latest to see if the
+bug clears, else I will report it.  I just can't beleave that no one else has had a issue with this.
+The thing I see is ld hl,(s+78).  On paper this looks o.k.  BUT it should be 78hex, not 78 dec.
+Like I say, this bug should not be here after 25 years of compiler debug.  TBD.
 
