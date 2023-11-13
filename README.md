@@ -153,3 +153,21 @@ bug clears, else I will report it.  I just can't beleave that no one else has ha
 The thing I see is ld hl,(s+78).  On paper this looks o.k.  BUT it should be 78hex, not 78 dec.
 Like I say, this bug should not be here after 25 years of compiler debug.  TBD.
 
+Back to PLM compiler.  I split the mpmldr.sub file into 2 parts breaking at the CPM command.
+The Z180 SBC is hanging at the CPM command (no idea why yet) and so this seems like a good 
+place to break the build.  After getting a good compile, I just need to mess with the 
+ldrbios and ldrbdos files, both 8080 assembler code.  
+
+Jump forward a few days and now ldrbios is integrated with HBIOS and the console code is
+working.  The disk code is totally busted at this point.  I tried to include code from 
+biosldr.z80 and hit the wall.  I will rewrite the code and do more testing.  It is also
+integrated with the HBIOS code.  I am attempting to use the code that converts head/track/sector
+into LBA, since this just seems to be the best way to do it.  Also biodldr has a disk deblocking
+struct that is already setup for micro SD cards.  
+
+One of the things that is causeing an issue is the bank switching.  mpmldr does not know about
+bank switching, MPM does however.  I may try to restrict MPM to the lower 32k of ram in an attempt
+to simplify the mpmldr code.  I'd like to get mpm up to a limping state soon.
+
+
+
