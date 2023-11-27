@@ -169,5 +169,7 @@ One of the things that is causeing an issue is the bank switching.  mpmldr does 
 bank switching, MPM does however.  I may try to restrict MPM to the lower 32k of ram in an attempt
 to simplify the mpmldr code.  I'd like to get mpm up to a limping state soon.
 
-
+As soon as I finish the CommonConsole project I will be hitting this hard.  My current
+plan is to use my z80 sbc to get the first load working.  I want to be certain I am not
+working on 2 issues at the same time  (bank switch (RomWBW) and sio programming).
 
